@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/widgets/edit_page.dart';
+import 'package:note_app/Views/edit_page.dart';
 import 'package:note_app/Views/home_page.dart';
 
 void main() {

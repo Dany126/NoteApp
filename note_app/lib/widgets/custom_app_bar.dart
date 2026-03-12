@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.icon, required this.onPressed});
+  const CustomAppBar({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    this.title = "Notes",
+  });
   final Icon icon;
   final VoidCallback onPressed;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +18,7 @@ class CustomAppBar extends StatelessWidget {
         const Text(
           "Notes",
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 26,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
