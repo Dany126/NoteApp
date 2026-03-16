@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+
+import 'package:note_app/widgets/custom_bottom.dart';
 import 'package:note_app/widgets/custom_text_field.dart';
 
-class CustomBottomModelSheet extends StatelessWidget {
+class CustomBottomModelSheet extends StatefulWidget {
   const CustomBottomModelSheet({super.key});
-  void customBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      isScrollControlled: true,
-      context: context,
-      builder: (context) {
-        return const CustomBottomModelSheet();
-      },
-    );
-  }
+
+  @override
+  State<CustomBottomModelSheet> createState() => _CustomBottomModelSheetState();
+}
+
+class _CustomBottomModelSheetState extends State<CustomBottomModelSheet> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String title = '';
+  String content = '';
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +24,61 @@ class CustomBottomModelSheet extends StatelessWidget {
         top: 16,
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height / 2,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Form(
+          key: formKey,
+          // SINGLE Form widget wrapping ALL fields
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 32),
+              CustomTextField(
+                hint: "Title",
+                maxLines: 1,
+                onSaved: (value) {
+                  title = value ?? '';
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Title can't be empty";
+                  }
 
-          children: const [
-            SizedBox(height: 32),
+                  return null; // Return null means no error
+                },
+              ),
+              const SizedBox(height: 16),
+              CustomTextField(
+                hint: "Content",
+                maxLines: 5,
+                onSaved: (value) {
+                  content = value ?? '';
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Content can't be empty";
+                  }
 
-            CustomTextField(hint: "Title", maxLines: 1),
-            SizedBox(height: 16),
-            CustomTextField(hint: "Content", maxLines: 5),
-          ],
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              CustomBottom(
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Note saved successfully!'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

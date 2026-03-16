@@ -1,21 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/constant.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, this.maxLines = 1, required this.hint});
+class CustomTextField extends StatefulWidget {
+  const CustomTextField({
+    super.key,
+    this.maxLines = 1,
+    required this.hint,
+    this.onChanged, // Renamed from onChanging for convention
+    this.validator,
+    this.onSaved, // Added onSaved for form submission
+  });
+
   final int maxLines;
   final String hint;
 
+  final String? Function(String?)? onChanged;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved; // Added for form saving
+
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      // Removed the Form wrapper!
       style: const TextStyle(color: Colors.white),
-      maxLines: maxLines,
-
+      maxLines: widget.maxLines,
       cursorColor: kPrimaryColor,
+      onChanged: widget.onChanged,
+      validator: widget.validator,
+      onSaved: widget.onSaved, // Added onSaved
       decoration: InputDecoration(
-        hintText: hint,
-
+        hintText: widget.hint,
+        hintStyle: const TextStyle(color: Colors.grey),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(8),
@@ -23,6 +43,16 @@ class CustomTextField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: kPrimaryColor),
+        ),
+        errorBorder: OutlineInputBorder(
+          // Added for validation errors
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          // Added for validation errors
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.red),
         ),
       ),
     );

@@ -3,7 +3,7 @@ import 'package:note_app/constant.dart';
 
 import 'package:note_app/widgets/custom_app_bar.dart';
 import 'package:note_app/widgets/custom_notes_view.dart';
-import 'package:note_app/widgets/custom_show_sheet.dart';
+import 'package:note_app/Helper/show_modal_bottom_sheet.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () {
-          CustomBottomModelSheet().customBottomSheet(context);
+          showNoteBottomSheet(context);
         },
         child: const Icon(Icons.add, color: Colors.black),
       ),
