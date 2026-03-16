@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:note_app/widgets/custom_bottom.dart';
 import 'package:note_app/widgets/custom_text_field.dart';
 
-class CustomBottomModelSheet extends StatefulWidget {
-  const CustomBottomModelSheet({super.key});
+class AddNoteForm extends StatefulWidget {
+  const AddNoteForm({super.key});
 
   @override
-  State<CustomBottomModelSheet> createState() => _CustomBottomModelSheetState();
+  State<AddNoteForm> createState() => _AddNoteFormState();
 }
 
-class _CustomBottomModelSheetState extends State<CustomBottomModelSheet> {
+class _AddNoteFormState extends State<AddNoteForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String title = '';
   String content = '';
@@ -67,6 +67,7 @@ class _CustomBottomModelSheetState extends State<CustomBottomModelSheet> {
                 onTap: () {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
+                    Navigator.of(context).pop();
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

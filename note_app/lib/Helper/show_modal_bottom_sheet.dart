@@ -1,6 +1,6 @@
 // In your main file or a separate utils file
 import 'package:flutter/material.dart';
-import 'package:note_app/widgets/custom_show_sheet.dart';
+import 'package:note_app/widgets/add_note_form.dart';
 
 void showNoteBottomSheet(BuildContext context) {
   showModalBottomSheet(
@@ -8,7 +8,7 @@ void showNoteBottomSheet(BuildContext context) {
     isScrollControlled: true,
     context: context,
     builder: (context) {
-      return const CustomBottomModelSheet();
+      return AddNoteForm();
     },
   );
 }
