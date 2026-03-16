@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/Cubits/addNotesCubits/add_note_states.dart';
 import 'package:note_app/Cubits/addNotesCubits/add_notes_cubit.dart';
 import 'package:note_app/Models/note_model.dart';
 
@@ -66,26 +67,33 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 },
               ),
               const SizedBox(height: 16),
-              CustomBottom(
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                    var note = NoteModel(
-                      title: title,
-                      content: content,
-                      date: DateTime.now().toString(),
-                      color: Colors.red.value,
-                    );
-                    BlocProvider.of<AddNotesCubit>(context).addNotes(note);
-                    Navigator.of(context).pop();
+              BlocBuilder<AddNotesCubit, AddNoteStates>(
+                builder: (context, state) {
+                  return CustomBottom(
+                    isLoading: state is AddNoteLoading ? true : false,
+                    onTap: () {
+                      state is AddNoteLoading ? true : false;
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Note saved successfully!'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  }
+                        var note = NoteModel(
+                          title: title,
+                          content: content,
+                          date: DateTime.now().toString(),
+                          color: _getRandomColor(),
+                        );
+                        BlocProvider.of<AddNotesCubit>(context).addNotes(note);
+                        Navigator.of(context).pop();
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Note saved successfully!'),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      }
+                    },
+                  );
                 },
               ),
             ],
@@ -93,5 +101,18 @@ class _AddNoteFormState extends State<AddNoteForm> {
         ),
       ),
     );
+  }
+
+  int _getRandomColor() {
+    List<int> colors = const [
+      0xFF4CAF50, // Green
+      0xFF2196F3, // Blue
+      0xFFFF9800, // Orange
+      0xFFE91E63, // Pink
+      0xFF9C27B0, // Purple
+      0xFFFF5722, // Deep Orange
+      0xFF3F51B5, // Indigo
+    ];
+    return colors[DateTime.now().millisecond % colors.length];
   }
 }
