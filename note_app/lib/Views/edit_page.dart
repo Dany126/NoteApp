@@ -58,14 +58,13 @@ class _EditPageState extends State<EditPage> {
                 CustomTextField(
                   hint: note.title,
                   maxLines: 1,
-                  initialValue: note.title, // ← pre-filled
+
                   onChanged: (value) => editTitle = value ?? editTitle,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
                   hint: note.content,
                   maxLines: 10,
-                  initialValue: note.content,
 
                   onChanged: (p0) => editContent = p0 ?? editContent,
                 ),
