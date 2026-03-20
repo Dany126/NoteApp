@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:note_app/Cubits/NotesCubits/notes_cubits.dart';
+import 'package:note_app/Models/note_model.dart';
 
 class CustomNoteCard extends StatelessWidget {
-  const CustomNoteCard({super.key});
+  const CustomNoteCard({super.key, required this.note});
+  final NoteModel note;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "EditPage");
+        Navigator.pushNamed(context, "EditPage", arguments: note);
       },
       child: Container(
-        padding: const EdgeInsets.only(left: 16, top: 24, bottom: 24),
+        padding: EdgeInsets.only(left: 16, top: 24, bottom: 24),
         decoration: BoxDecoration(
-          color: const Color(0xffAC3931),
+          color: Color(note.color),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ListTile(
-              title: const Text(
-                "Flutter Basics",
+              title: Text(
+                note.title,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -29,15 +33,18 @@ class CustomNoteCard extends StatelessWidget {
                 ),
               ),
 
-              subtitle: const Padding(
+              subtitle: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
-                  "Build your career with Dany Ashraf",
+                  note.content,
                   style: TextStyle(fontSize: 18, color: Colors.black87),
                 ),
               ),
               trailing: IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  note.delete();
+                  await (context).read<NotesCubits>().fetchNotes();
+                },
                 icon: const FaIcon(
                   FontAwesomeIcons.trash,
                   color: Colors.black,
@@ -47,10 +54,10 @@ class CustomNoteCard extends StatelessWidget {
             ),
 
             /// Date
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                "May 10, 2026",
+                note.date,
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
             ),

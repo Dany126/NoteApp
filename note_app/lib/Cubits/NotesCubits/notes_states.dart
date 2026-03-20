@@ -2,6 +2,8 @@ import 'package:note_app/Models/note_model.dart';
 
 class NotesStates {}
 
+class NotesInitial extends NotesStates {}
+
 class NotesLoading extends NotesStates {}
 
 class NotesSuccess extends NotesStates {

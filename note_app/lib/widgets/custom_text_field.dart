@@ -8,13 +8,15 @@ class CustomTextField extends StatefulWidget {
     required this.hint,
     this.onChanged, // Renamed from onChanging for convention
     this.validator,
-    this.onSaved, // Added onSaved for form submission
+    this.onSaved,
+    this.initialValue, // Added onSaved for form submission
   });
 
   final int maxLines;
   final String hint;
+  final String? initialValue;
 
-  final String? Function(String?)? onChanged;
+  final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved; // Added for form saving
 
@@ -26,6 +28,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: widget.initialValue,
       // Removed the Form wrapper!
       style: const TextStyle(color: Colors.white),
       maxLines: widget.maxLines,

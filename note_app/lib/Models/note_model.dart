@@ -4,9 +4,9 @@ part 'note_model.g.dart';
 @HiveType(typeId: 0)
 class NoteModel extends HiveObject {
   @HiveField(0)
-  final String title;
+  String title;
   @HiveField(1)
-  final String content;
+  String content;
   @HiveField(2)
   final String date;
   @HiveField(3)
@@ -18,4 +18,12 @@ class NoteModel extends HiveObject {
     required this.date,
     required this.color,
   });
+  factory NoteModel.fromMap(Map<String, dynamic> map) {
+    return NoteModel(
+      title: map['title'],
+      content: map['content'],
+      date: map['date'],
+      color: map['color'],
+    );
+  }
 }

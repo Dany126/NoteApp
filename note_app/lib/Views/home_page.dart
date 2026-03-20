@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/Cubits/NotesCubits/notes_cubits.dart';
+
 import 'package:note_app/constant.dart';
 
 import 'package:note_app/widgets/custom_app_bar.dart';
@@ -12,29 +11,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NotesCubits(),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: kPrimaryColor,
-          onPressed: () {
-            showNoteBottomSheet(context);
-          },
-          child: const Icon(Icons.add, color: Colors.black),
-        ),
-        backgroundColor: Colors.black,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                CustomAppBar(icon: const Icon(Icons.search), onPressed: () {}),
-                const SizedBox(height: 20),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimaryColor,
+        onPressed: () {
+          showNoteBottomSheet(context);
+        },
+        child: const Icon(Icons.add, color: Colors.black),
+      ),
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              CustomAppBar(icon: const Icon(Icons.search), onPressed: () {}),
+              const SizedBox(height: 20),
 
-                /// Expanded should be HERE
-                const Expanded(child: CustomNotesView()),
-              ],
-            ),
+              /// Expanded should be HERE
+              const Expanded(child: CustomNotesView()),
+            ],
           ),
         ),
       ),
