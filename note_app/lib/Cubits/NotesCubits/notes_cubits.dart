@@ -9,7 +9,7 @@ class NotesCubits extends Cubit<NotesStates> {
     fetchNotes(); // ← add this
   }
 
-  Future<void> fetchNotes() async {
+  Future fetchNotes() async {
     emit(NotesLoading());
     try {
       var notesBox = await Hive.openBox<NoteModel>('notes');

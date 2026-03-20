@@ -5,6 +5,7 @@ import 'package:note_app/widgets/custom_note_card.dart';
 class NotesSearchDelegate extends SearchDelegate<String> {
   final List<NoteModel> notes;
   NotesSearchDelegate(this.notes);
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -29,8 +30,7 @@ class NotesSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
+    return _buildSearchResults();
   }
 
   @override
