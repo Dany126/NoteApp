@@ -96,7 +96,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
                         var note = NoteModel(
                           title: title,
                           content: content,
-                          date: DateTime.now().toString(),
+
+                          date: DateTime.now().toString().substring(0, 10),
                           color: _getRandomColor(),
                         );
 

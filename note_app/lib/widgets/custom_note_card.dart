@@ -43,6 +43,7 @@ class CustomNoteCard extends StatelessWidget {
               trailing: IconButton(
                 onPressed: () async {
                   note.delete();
+
                   await (context).read<NotesCubits>().fetchNotes();
                 },
                 icon: const FaIcon(
@@ -56,6 +57,7 @@ class CustomNoteCard extends StatelessWidget {
             /// Date
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
+
               child: Text(
                 note.date,
                 style: TextStyle(fontSize: 14, color: Colors.black54),
